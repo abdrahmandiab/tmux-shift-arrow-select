@@ -26,15 +26,6 @@ Add to your `~/.tmux.conf`:
 set -g @plugin 'abdrahmandiab/tmux-shift-arrow-select'
 ```
 
-Then press `Prefix + I` to install.
-
-### Manual
-
-```bash
-git clone https://github.com/abdrahmandiab/tmux-shift-arrow-select ~/.tmux/plugins/tmux-shift-arrow-select
-~/.tmux/plugins/tmux-shift-arrow-select/shift-arrow-select.tmux
-```
-
 ## Keybindings
 
 | Key | Action |
@@ -45,6 +36,26 @@ git clone https://github.com/abdrahmandiab/tmux-shift-arrow-select ~/.tmux/plugi
 | `Shift+Down` | Start/extend selection downward |
 
 Moving the cursor back toward the anchor shrinks the selection, exactly as in a text editor.
+
+## Terminal Notes
+
+### Apple Terminal (macOS)
+
+Apple Terminal does not send distinct escape sequences for `Shift+Arrow` keys by default — they arrive as plain arrow keys, making them indistinguishable from unmodified presses. You need to configure custom key mappings:
+
+1. Open **Terminal → Settings → Profiles → [your profile] → Keyboard**
+2. Click **+** and add the following entries:
+
+| Key | Modifier | Action | Send String |
+|-----|----------|--------|-------------|
+| `↑` | Shift | Send String | `^[[1;2A` |
+| `↓` | Shift | Send String | `^[[1;2B` |
+| `←` | Shift | Send String | `^[[1;2D` |
+| `→` | Shift | Send String | `^[[1;2C` |
+
+> In the Send String field, `^[` is entered by pressing the actual `Escape` key.
+
+iTerm2 sends these sequences correctly out of the box and requires no extra configuration.
 
 ## Configuration
 
