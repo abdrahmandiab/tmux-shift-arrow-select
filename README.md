@@ -11,7 +11,10 @@ Text-editor style Shift+Arrow selection for tmux. Hold Shift and press arrow key
 ## Requirements
 
 - tmux >= 3.2
-- `xclip` (default) or any clipboard command of your choice (see [Configuration](#configuration))
+- Clipboard command (auto-detected):
+  - macOS: `pbcopy` (built-in)
+  - Wayland: `wl-copy` (from `wl-clipboard`)
+  - X11/Linux: `xclip`
 
 ## Installation
 
@@ -51,11 +54,8 @@ Add these to your `~/.tmux.conf` before the `run` line that loads TPM:
 # Disable the plugin (default: on)
 set -g @shift-arrow-select "off"
 
-# Use a different clipboard command (default: xclip -selection clipboard -in)
-# For Wayland:
-set -g @shift-arrow-clipboard-cmd "wl-copy"
-# For macOS:
-set -g @shift-arrow-clipboard-cmd "pbcopy"
+# Override the clipboard command (auto-detected by default: pbcopy on macOS, wl-copy on Wayland, xclip on X11)
+set -g @shift-arrow-clipboard-cmd "your-clipboard-cmd"
 ```
 
 ## How it works

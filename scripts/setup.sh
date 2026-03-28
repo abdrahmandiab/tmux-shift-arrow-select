@@ -6,7 +6,15 @@ clipboard_cmd=$(tmux show-option -gqv "@shift-arrow-clipboard-cmd")
 
 # Defaults
 enabled="${enabled:-on}"
-clipboard_cmd="${clipboard_cmd:-xclip -selection clipboard -in}"
+if [ -z "$clipboard_cmd" ]; then
+    if [ "$(uname)" = "Darwin" ]; then
+        clipboard_cmd="pbcopy"
+    elif [ -n "$WAYLAND_DISPLAY" ] || [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+        clipboard_cmd="wl-copy"
+    else
+        clipboard_cmd="xclip -selection clipboard -in"
+    fi
+fi
 
 if [ "$enabled" != "on" ]; then
     exit 0
